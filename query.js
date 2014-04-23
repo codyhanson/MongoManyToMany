@@ -19,6 +19,15 @@ function getAllFoos(deferred){
 }
 
 
+function getAllFoosPopulateBars(deferred){
+   Foo.find({})
+       .populate('bars')
+       .exec(function(error,docs){
+       //call resolve to let benchmark know this async test is done.
+       deferred.resolve();
+   });
+}
+
 function getAllBars(deferred){
    Foo.find({},function(error,docs){
        //call resolve to let benchmark know this async test is done.
@@ -43,12 +52,19 @@ suite.add('Get All Foos', {
         getAllBars(deferred);
     }
 })
+.add('Get All Foos - with Bar population', {
+    defer: true,
+    fn: function(deferred) {
+        getAllFoosPopulateBars(deferred);
+    }
+})
 // add listeners
 .on('cycle', function(event) {
     console.log(String(event.target));
 })
 .on('complete', function() {
     console.log('Fastest is ' + this.filter('fastest').pluck('name'));
+    process.exit()
 })
 // run async
 .run({ 'async': true });
