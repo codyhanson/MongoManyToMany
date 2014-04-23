@@ -76,7 +76,7 @@ async.series([
         for (var i = 0; i < numFoos; i++){
             var someBars = []
             for (var j = 0; j < numBarsPerFoo; j++){
-                someBars.push(bars[j % numBars].id);
+                someBars.push(bars[(i + j) % numBars].id);
             }
             makeFoo(i,someBars);
         }

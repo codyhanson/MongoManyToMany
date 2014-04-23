@@ -3,6 +3,7 @@
  */
 
 var fb = require('./foosAndBars');
+var async = require('async');
 
 var Foo = fb.Foo;
 var Bar = fb.Bar;
@@ -29,12 +30,34 @@ function getAllFoosPopulateBars(deferred){
 }
 
 function getAllBars(deferred){
-   Foo.find({},function(error,docs){
+   Bar.find({},function(error,docs){
        //call resolve to let benchmark know this async test is done.
        deferred.resolve();
    });
 }
 
+function getAllBarsWithFoos(deferred){
+   Bar.find({},function(error, bars){
+		async.each(bars, 
+			function(bar, done) {
+				bar.foos = [];
+				Foo.find({bars: bar.id}, function(error, foos){
+					for(var i = 0; i < foos.length; i++) {
+						bar.foos.push(foos[i]);
+					}
+					//console.log(bar);
+					//for(var i = 0; i < bar.foos.length; i++){ 
+					//	console.log(bar.foos[i].fooValue);
+					//}
+					done();
+				});
+			}, 
+			function(err){
+			   //call resolve to let benchmark know this async test is done.
+			   deferred.resolve();
+			});
+	});
+}
 
 
 
@@ -56,6 +79,12 @@ suite.add('Get All Foos', {
     defer: true,
     fn: function(deferred) {
         getAllFoosPopulateBars(deferred);
+    }
+})
+.add('Get All Bars - with Foo population', {
+    defer: true,
+    fn: function(deferred) {
+        getAllBarsWithFoos(deferred);
     }
 })
 // add listeners
