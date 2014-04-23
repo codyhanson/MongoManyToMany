@@ -1,0 +1,16 @@
+{
+  "name": "mongoManyToMany",
+  "version": "0.0.0",
+  "description": "",
+  "main": "query.js",
+  "dependencies": {
+    "mongoose": "~3.8.8",
+    "async":"*"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
