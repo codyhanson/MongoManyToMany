@@ -5,7 +5,8 @@
   "main": "query.js",
   "dependencies": {
     "mongoose": "~3.8.8",
-    "async":"*"
+    "async":"*",
+    "benchmark":"*"
   },
   "devDependencies": {},
   "scripts": {

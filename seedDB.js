@@ -14,10 +14,10 @@ var async = require('async');
 //});
 
 
-var numBars = 10;
-var bars = []
-var numFoos=  10;
-var numBarsPerFoo = 2;
+var numBars = 100;
+var bars = [];
+var numFoos=  1000;
+var numBarsPerFoo = 5;
 var foos = [];
 
 function makeBar(i){
